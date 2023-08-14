@@ -7,7 +7,16 @@ class GetRequester:
         self.url = url
 
     def get_response_body(self):
-        pass
-
+        response = requests.get(self.url)
+        return response.content
+    
     def load_json(self):
-        pass
+        response_body = self.get_response_body()
+        if response_body is not None:
+            try:
+                json_data = json.loads(response_body)
+                return json_data
+            except json.JSONDecodeError:
+                return None
+        else:
+            return None
